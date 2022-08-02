@@ -1,13 +1,10 @@
 # wikispeedia-bot
-A Twitter bot that plays Wikispeedia
+A Twitter bot that plays [Wikispeedia](https://dlab.epfl.ch/wikispeedia/play/) 
 
 ## Usage
-The front-end for this project is [@wikispeedia_bot](https://twitter.com/wikispeedia_bot/with_replies). Tweeting at it currently doesn't actually do anything—although
-there are still some examples of its work on Twitter—since I haven't migrated it to some always-on cloud service. [*Quick, quick, add that to the to-do list*]
-
-## [Wikispeedia](https://dlab.epfl.ch/wikispeedia/play/) 
-Perhaps the single greatest way to pass time in 10th grade personal finanace, try to find your way from one Wikipedia page to another through internal links—thereby providing 
-data for some research project. (Of course, making a bot to do it for you both defeats the point of the research *and* sucks the joy out of the game.)
+The front-end for this project is [@wikispeedia_bot](https://twitter.com/wikispeedia_bot/with_replies). It's currently turned off—I still need
+to migrate it to an always-on service—but when it works, you can tweet at it in the form "@wikispeedia_bot {topic1} --> {topic2}", and it'll tweet back at you with
+a path between the two topics. There are still some examples on Twitter, even though the bot is currently inactive.
 
 ## Examples
 | Input  | Output |
@@ -16,9 +13,14 @@ data for some research project. (Of course, making a bot to do it for you both d
 |`Old navy --> war crimes`| `Old Navy --> California --> Korean War --> War crime` |
 
 ## Search Algorithm
-I named it `twoWayCloudSearch`—I suppose my mental image of it is two clouds expanding until they intersect? Anyway, it's just a BFS based on a bidirectional implementation of
-[Lee's Alogorithm](https://en.wikipedia.org/wiki/Lee_algorithm). It's also recursive, because that made it very easy to write, but definitely shouldn't be because that leads to
-significant recomputations.
+The most interesting part of this project is the algorithm that finds the path between articles. It's a  BFS based on a bidirectional implementation of
+[Lee's Alogorithm](https://en.wikipedia.org/wiki/Lee_algorithm)—i.e., it starts at either end and flood-fills until there's some overlap.
+
+I wrote it in a recursive way, basically taking advantage of the fact that
+$BFS(p_i, q_j) \rightarrow p_i + BFS(p_{i + 1}, q_{j - 1}) + q_j$, which lends itself nicely to decomposing the search into smaller self-similar problems.
+
+This approach has the added benefite of being very easy to write and not requiring any sophisticated data structures, but it is almost certainly slower
+than it has to be. 
 
 ## TODO
 - Host it somewhere so that it can be always-on
