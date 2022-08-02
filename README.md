@@ -17,7 +17,7 @@ The most interesting part of this project is the algorithm that finds the path b
 [Lee's Alogorithm](https://en.wikipedia.org/wiki/Lee_algorithm)—i.e., it starts at either end and flood-fills until there's some overlap.
 
 I wrote it in a recursive way, basically taking advantage of the fact that
-$BFS(p_i, q_j) \rightarrow p_i + BFS(p_{i + 1}, q_{j - 1}) + q_j$, which lends itself nicely to decomposing the search into smaller self-similar problems.
+$BFS(P_0, P_n) \rightarrow P_0 + BFS(P_{1}, P_{n - 1}) + P_n$, which lends itself nicely to decomposing the search into smaller self-similar problems.
 
 This approach has the added benefite of being very easy to write and not requiring any sophisticated data structures, but it is almost certainly slower
 than it has to be. 
